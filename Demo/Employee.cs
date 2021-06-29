@@ -111,3 +111,12 @@ namespace Demo
         }
     }
 }
+
+// OOP Features
+// 1. Class
+// 2. Object
+// 3. Polymorphism
+// 4. Encapsulation
+// 5. Abstraction
+// 6. Hierarchy
+// 7. Inheritance

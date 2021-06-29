@@ -1,17 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.Polymorphism
 {
-    public class BankAccount
+    // Parent/Base class
+    public abstract class BankAccount
     {
         public string Type { get; set; }
         public string AccountNumber { get; set; }
         public double Balance { get; set; }
         public Employee Employee { get; set; }
+
+        public BankAccount(string type, string accountNumber)
+        {
+            Type = type;
+            AccountNumber = accountNumber;
+            Balance = 1000;
+        }
 
         public void Credit(double amount)
         {
@@ -35,7 +39,7 @@ namespace Demo.Polymorphism
             Balance += amount;
         }
 
-        #region 'Static Polymorphism (Overloading)'
+        #region 'Static Polymorphism (Overloading) (Compile Time)'
         public void Debit(double amount)
         {
             if (amount <= 0)
@@ -52,5 +56,30 @@ namespace Demo.Polymorphism
         }
         #endregion
 
+        #region 'This is the problem'
+        public void DebitForSavingAccount(double amount)
+        {
+            if (amount <= 0)
+            {
+                throw new InvalidOperationException("amount should be greater than zero.");
+            }
+
+            Balance -= amount + (amount * 0.10);
+        }
+
+        public void DebitForCurrentAccount(double amount)
+        {
+            if (amount <= 0)
+            {
+                throw new InvalidOperationException("amount should be greater than zero.");
+            }
+
+            Balance -= amount + (amount * 0.15);
+        }
+        #endregion
+
+        #region 'Dynamic Polymorphism (Overrriding) (Runtime)'
+        public abstract void DebitAmount(double amount);
+        #endregion
     }
 }
